@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+
+
+import sys
+import termios
+import tty
+import zlib
+
+
+KEYPRESS_BUFFER = ''
+BUFFER_LENGTH = 200
+ENTROPY_LENGTH = 200
+
+original = termios.tcgetattr(sys.stdin)
+tty.setraw(sys.stdin)
+
+sys.stderr.write("press keys to harvest entropy:\n")
+
+
+while True:
+    k = sys.stdin.read(1)
+    if k == '\x03':
+        break
+
+    KEYPRESS_BUFFER += k
+
+    if len(KEYPRESS_BUFFER) > BUFFER_LENGTH:
+        """
+         We have enough in the buffer, let's see if they are pressing randomly enough.
+
+         Perhaps I am smart to use compression.. perhaps I am too clever.
+
+         Must seek more knowledge and experience on testing for randomness.
+        """
+
+        compressed_keys = zlib.compress(KEYPRESS_BUFFER.encode('utf-8'), 9)
+
+        if len(compressed_keys) > ENTROPY_LENGTH:
+            """
+              Being lazy and just dropping first 10 bytes.
+
+              TODO: Research header/footer lengths and figure out what
+                    repetitive data to strip.
+            """
+
+            sys.stdout.buffer.write(compressed_keys[10:])
+            sys.stdout.buffer.flush()
+
+            KEYPRESS_BUFFER = ''
+
+
+termios.tcsetattr(sys.stdin, termios.TCSADRAIN, original)
