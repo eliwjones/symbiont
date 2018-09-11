@@ -27,4 +27,19 @@ mrz@mrzsss:~/eliwjones/symbiont$
 Notes
 =====
 
-This has only been tested on Ubuntu Linux. 
+This has only been tested on Ubuntu Linux.
+
+FAQ
+===
+
+1. Why aren't there more sources of entropy?
+
+   Multiple sources of entropy just serve to mask the interesting parts of this puzzle.  We are interested in taking a signal that is attempting to be random and then ensuring that it is as random as possible.
+   
+   Also, it would take much longer to do right and this is time limited.
+
+2. Why bother compressing the keystroke buffer?
+
+   Compressing the buffer of keypresses helps us dodge issues like the user typing the same set of keys over and over during entropy harvesting (e.g. 'jkjkjkjkjkjkjk').  It also serves to highlight the link between compression and randomness (and randomness and the axioms of systems).
+
+   See Gregory Chaitin's [META MATH!](https://arxiv.org/pdf/math/0404335.pdf) for a fun exploration of this.
