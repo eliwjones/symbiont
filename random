@@ -16,7 +16,7 @@ total_bytes_written = 0
 original = termios.tcgetattr(sys.stdin)
 tty.setraw(sys.stdin)
 
-sys.stderr.write("Press keys to harvest entropy (CTRL-C to exit):\n")
+sys.stderr.write("Press keys to harvest entropy (CTRL-C to exit):\n\r")
 
 
 while True:
@@ -54,7 +54,7 @@ while True:
             bytes_in_chunk = len(compressed_keys[10:])
             total_bytes_written += bytes_in_chunk
 
-            sys.stderr.write(f"\rTotal bytes harvested: {total_bytes_written} ")
+            sys.stderr.write(f"\rTotal bytes harvested: {total_bytes_written}\n\r")
             sys.stderr.flush()
 
             KEYPRESS_BUFFER = ''
