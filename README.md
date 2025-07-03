@@ -18,7 +18,7 @@ $ ./random > my_random_data.bin
 Press keys to harvest entropy (CTRL-C to exit):
 Total bytes harvested: 191
 Total bytes harvested: 382
-eliwjones@LAPTOP-P7Q7FKRN:~/github/eliwjones/symbiont$
+$
 ```
 
 3. View your random data:
