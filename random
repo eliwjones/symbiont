@@ -11,6 +11,8 @@ KEYPRESS_BUFFER = ''
 BUFFER_LENGTH = 200
 ENTROPY_LENGTH = 200
 
+total_bytes_written = 0
+
 original = termios.tcgetattr(sys.stdin)
 tty.setraw(sys.stdin)
 
@@ -48,6 +50,12 @@ while True:
 
             sys.stdout.buffer.write(compressed_keys[10:])
             sys.stdout.buffer.flush()
+
+            bytes_in_chunk = len(compressed_keys[10:])
+            total_bytes_written += bytes_in_chunk
+
+            sys.stderr.write(f"\rTotal bytes harvested: {total_bytes_written} ")
+            sys.stderr.flush()
 
             KEYPRESS_BUFFER = ''
 
